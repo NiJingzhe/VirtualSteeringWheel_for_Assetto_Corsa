@@ -1,0 +1,250 @@
+[gd_scene load_steps=21 format=3 uid="uid://dffi1571jjuvo"]
+
+[ext_resource type="Script" path="res://pages/main_page/script/main_page.gd" id="1_kx5fb"]
+[ext_resource type="Texture2D" uid="uid://dgeay1tgxpy1w" path="res://assets/texture/wheelface.png" id="1_x7cdy"]
+[ext_resource type="Texture2D" uid="uid://ci5y8swq87dos" path="res://assets/texture/throttle.png" id="2_bb2s2"]
+[ext_resource type="Texture2D" uid="uid://cep62gu56gl64" path="res://assets/texture/brake.png" id="3_4lma8"]
+[ext_resource type="Texture2D" uid="uid://5ib1880wy24i" path="res://assets/texture/reset.png" id="4_66qw7"]
+[ext_resource type="SystemFont" uid="uid://6j2fc8auppwa" path="res://assets/Font/km_h_font.tres" id="4_ybf8c"]
+[ext_resource type="Texture2D" uid="uid://8xadp02pc5dl" path="res://assets/texture/rpm_progress.png" id="5_6exsp"]
+[ext_resource type="Script" path="res://pages/main_page/script/UDPSender.gd" id="8_8lm08"]
+[ext_resource type="Script" path="res://pages/main_page/script/UDPReceiver.gd" id="9_ga7qu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gcot3"]
+size = Vector2(166.765, 357.33)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xof5"]
+size = Vector2(164.52, 200.955)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1kpk3"]
+radius = 125.12
+
+[sub_resource type="SystemFont" id="SystemFont_tdsv0"]
+font_names = PackedStringArray("Calibri")
+
+[sub_resource type="LabelSettings" id="LabelSettings_15106"]
+font = SubResource("SystemFont_tdsv0")
+font_size = 250
+font_color = Color(0.803922, 0.968627, 0.968627, 1)
+shadow_size = 20
+shadow_color = Color(0.25098, 0.815686, 1, 0.286275)
+
+[sub_resource type="LabelSettings" id="LabelSettings_56itb"]
+font = ExtResource("4_ybf8c")
+font_size = 100
+font_color = Color(0.964706, 0.803922, 0.0666667, 1)
+shadow_size = 12
+shadow_color = Color(0.792157, 0.87451, 0, 0.313726)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rrpbj"]
+font = ExtResource("4_ybf8c")
+font_size = 200
+font_color = Color(0, 0.682353, 0.968627, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_eyetv"]
+font = ExtResource("4_ybf8c")
+font_size = 40
+font_color = Color(0.576471, 0.576471, 0.576471, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_7j612"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="LabelSettings" id="LabelSettings_n0ndj"]
+font = SubResource("SystemFont_7j612")
+font_size = 40
+font_color = Color(0.901961, 0, 0.235294, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qk041"]
+font = ExtResource("4_ybf8c")
+font_size = 35
+font_color = Color(0.74902, 0, 0.231373, 1)
+outline_color = Color(0.992157, 0.368627, 0.278431, 1)
+
+[node name="MainPage" type="Node2D"]
+script = ExtResource("1_kx5fb")
+
+[node name="UDPSender" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("8_8lm08")
+
+[node name="UDPReceiver" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_ga7qu")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 2696.0
+offset_bottom = 1230.0
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1350.0
+offset_top = -614.0
+offset_right = 1350.0
+offset_bottom = 614.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_x7cdy")
+
+[node name="throttleButton" type="TouchScreenButton" parent="Control"]
+unique_name_in_owner = true
+position = Vector2(2064, 113)
+scale = Vector2(2.89286, 2.89286)
+texture_normal = ExtResource("2_bb2s2")
+shape = SubResource("RectangleShape2D_gcot3")
+
+[node name="brakeButton" type="TouchScreenButton" parent="Control"]
+unique_name_in_owner = true
+position = Vector2(131, 541)
+scale = Vector2(2.78571, 2.78571)
+texture_normal = ExtResource("3_4lma8")
+shape = SubResource("RectangleShape2D_0xof5")
+
+[node name="resetButton" type="TouchScreenButton" parent="Control"]
+unique_name_in_owner = true
+position = Vector2(1245, 958)
+texture_normal = ExtResource("4_66qw7")
+shape = SubResource("CircleShape2D_1kpk3")
+
+[node name="speedLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -418.0
+offset_top = -109.0
+offset_right = 282.0
+offset_bottom = 236.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1 2 5"
+label_settings = SubResource("LabelSettings_15106")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="km_h" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 246.0
+offset_top = -63.0
+offset_right = 531.0
+offset_bottom = 63.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "KM / H"
+label_settings = SubResource("LabelSettings_56itb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="gearLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 310.0
+offset_top = -363.0
+offset_right = 439.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "N
+"
+label_settings = SubResource("LabelSettings_rrpbj")
+
+[node name="angleLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -429.0
+offset_right = 100.0
+offset_bottom = -348.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "angle"
+label_settings = SubResource("LabelSettings_eyetv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="rpmProgressBar" type="TextureProgressBar" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 807.0
+offset_top = 212.0
+offset_right = 1573.0
+offset_bottom = 853.0
+fill_mode = 4
+texture_under = ExtResource("5_6exsp")
+texture_progress = ExtResource("5_6exsp")
+tint_under = Color(0.305882, 0.305882, 0.305882, 1)
+radial_initial_angle = 224.0
+radial_fill_degrees = 205.0
+radial_center_offset = Vector2(263.195, 267.63)
+
+[node name="absLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 1126.0
+offset_top = 453.0
+offset_right = 1252.0
+offset_bottom = 547.0
+text = "ABS"
+label_settings = SubResource("LabelSettings_n0ndj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="connectionLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 766.0
+offset_top = 148.0
+offset_right = 989.0
+offset_bottom = 240.0
+text = "disconnect"
+label_settings = SubResource("LabelSettings_qk041")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextEdit" type="TextEdit" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 18.0
+offset_top = 15.0
+offset_right = 695.0
+offset_bottom = 495.0
+theme_override_font_sizes/font_size = 25
+placeholder_text = "debug info"
+wrap_mode = 1
+draw_tabs = true
+draw_spaces = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

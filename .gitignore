@@ -1,0 +1,4 @@
+*.idsig
+VirtualSteering_GD_Version/export_presets.cfg
+VirtualSteering_MiniProgram_Version/project.config.json
+VirtualSteering_MiniProgram_Version/project.private.config.json

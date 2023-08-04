@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="VirtualSteeringWheel"
+run/main_scene="res://pages/main_page/main_page.tscn"
+config/features=PackedStringArray("4.1", "Mobile")
+config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=2700
+window/size/viewport_height=1228
+window/size/mode=3
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
+
+[importer_defaults]
+
+2d_array_texture={
+"compress/mode": 2
+}
+texture={
+"compress/mode": 2
+}
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_s3tc_bptc=true
+textures/vram_compression/import_etc2_astc=true

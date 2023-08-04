@@ -1,0 +1,48 @@
+/**index.wxss**/
+.acc_data_display{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    flex-wrap: wrap;
+}
+
+.text_warp {
+    background-color: black;
+    height:40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 100%;
+}
+
+.gear_text {
+    color: rgb(255, 196, 0);
+    font-size: 60px;
+    text-align: start;
+    flex-grow: 1;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.speed_text {
+    color: cyan;
+    font-size: 100px;
+    text-align: center;
+    flex-grow: 3;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.button_area {
+    background-color:black;
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    justify-content: center;
+    height: 80%;
+}
+
+.button {
+    font-size: 70px;
+}

@@ -1,0 +1,14 @@
+<!--index.wxml-->
+<view class="container" style="height: {{windowHeigth}}px">
+    <view class="acc_data_area" style="height: {{windowHeight}}px">
+        <view class="text_warp">
+            <text class="speed_text">{{speed}} KM/H</text>
+            <text class="gear_text">{{gear}}</text>
+        </view>
+        <view class="button_area">
+            <button class="button" type="warn" bind:touchstart="Brake" mut-bind:touchend="ResetBrake">刹车</button>
+            <button class="button" type="normal" bind:tap="ResetAngle">复位</button>
+            <button class="button" type="primary" bind:touchstart="Throttle" bind:touchend="ResetThrottle">油门</button>
+        </view>
+    </view>
+</view>

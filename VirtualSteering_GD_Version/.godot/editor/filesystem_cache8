@@ -1,0 +1,23 @@
+bdbec74c6e5bd72edee867077d70896c
+::res://::1691167253
+export_presets.cfg::TextFile::-1::1691058577::0::1::::<><>::
+icon.svg::CompressedTexture2D::1863657156086477710::1690876763::1690876768::1::::<><>::
+::res://assets/::1690900721
+::res://assets/Font/::1691053083
+km_h_font.tres::SystemFont::2196081996392341280::1691053083::0::1::::<><>::
+::res://assets/icon/::1690900726
+屏幕截图 2023-07-31 215317.png::CompressedTexture2D::8540249900097435212::1690811612::1690900726::1::::<><>::
+::res://assets/texture/::1691170155
+brake.png::CompressedTexture2D::5086493198901348807::1690878852::1690878855::1::::<><>::
+icon.png::CompressedTexture2D::2544708624649058829::1691170156::1691170159::1::::<><>::
+reset.png::CompressedTexture2D::2122289264223104462::1690886569::1690886659::1::::<><>::
+rpm_progress.png::CompressedTexture2D::2363718713497435657::1690882109::1690883490::1::::<><>::
+throttle.png::CompressedTexture2D::5397800568315838474::1690878765::1690878855::1::::<><>::
+wheelface.png::CompressedTexture2D::7588696878239808210::1690880592::1690880594::1::::<><>::
+::res://pages/::1690880880
+::res://pages/main_page/::1691058561
+main_page.tscn::PackedScene::7521061950951394240::1691058561::0::1::::<><>::res://pages/main_page/script/main_page.gd<>uid://dgeay1tgxpy1w::::res://assets/texture/wheelface.png<>uid://ci5y8swq87dos::::res://assets/texture/throttle.png<>uid://cep62gu56gl64::::res://assets/texture/brake.png<>uid://5ib1880wy24i::::res://assets/texture/reset.png<>uid://6j2fc8auppwa::::res://assets/Font/km_h_font.tres<>uid://8xadp02pc5dl::::res://assets/texture/rpm_progress.png<>res://pages/main_page/script/UDPSender.gd<>res://pages/main_page/script/UDPReceiver.gd
+::res://pages/main_page/script/::1691057559
+main_page.gd::GDScript::-1::1691057558::0::1::::SteeringWheel<>Node2D<>::
+UDPReceiver.gd::GDScript::-1::1690897888::0::1::::UDPReceiver<>Node<>::
+UDPSender.gd::GDScript::-1::1690897257::0::1::::UDPSender<>Node<>::
