@@ -1,14 +1,18 @@
-[gd_scene load_steps=21 format=3 uid="uid://dffi1571jjuvo"]
+[gd_scene load_steps=27 format=3 uid="uid://dffi1571jjuvo"]
 
 [ext_resource type="Script" path="res://pages/main_page/script/main_page.gd" id="1_kx5fb"]
 [ext_resource type="Texture2D" uid="uid://dgeay1tgxpy1w" path="res://assets/texture/wheelface.png" id="1_x7cdy"]
 [ext_resource type="Texture2D" uid="uid://ci5y8swq87dos" path="res://assets/texture/throttle.png" id="2_bb2s2"]
 [ext_resource type="Texture2D" uid="uid://cep62gu56gl64" path="res://assets/texture/brake.png" id="3_4lma8"]
-[ext_resource type="Texture2D" uid="uid://5ib1880wy24i" path="res://assets/texture/reset.png" id="4_66qw7"]
 [ext_resource type="SystemFont" uid="uid://6j2fc8auppwa" path="res://assets/Font/km_h_font.tres" id="4_ybf8c"]
 [ext_resource type="Texture2D" uid="uid://8xadp02pc5dl" path="res://assets/texture/rpm_progress.png" id="5_6exsp"]
 [ext_resource type="Script" path="res://pages/main_page/script/UDPSender.gd" id="8_8lm08"]
+[ext_resource type="Texture2D" uid="uid://7inii6juyfek" path="res://assets/texture/gear_up.png" id="8_jn3x6"]
+[ext_resource type="Texture2D" uid="uid://b6ee6wquxgcus" path="res://assets/texture/handbrake.png" id="8_u6r1b"]
 [ext_resource type="Script" path="res://pages/main_page/script/UDPReceiver.gd" id="9_ga7qu"]
+[ext_resource type="Texture2D" uid="uid://rry0ek71wy1r" path="res://assets/texture/gear_down.png" id="9_r6ol0"]
+[ext_resource type="Texture2D" uid="uid://ivair825o1d3" path="res://assets/texture/horn.png" id="11_2c7lp"]
+[ext_resource type="Texture2D" uid="uid://5ib1880wy24i" path="res://assets/texture/reset.png" id="11_347s7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gcot3"]
 size = Vector2(166.765, 357.33)
@@ -16,8 +20,20 @@ size = Vector2(166.765, 357.33)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xof5"]
 size = Vector2(164.52, 200.955)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1kpk3"]
-radius = 125.12
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5dpo1"]
+size = Vector2(199.55, 139.8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_st36p"]
+radius = 70.16
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y4y1m"]
+radius = 72.65
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_thvlm"]
+radius = 72.75
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pqh22"]
+radius = 112.1
 
 [sub_resource type="SystemFont" id="SystemFont_tdsv0"]
 font_names = PackedStringArray("Calibri")
@@ -45,14 +61,6 @@ font_color = Color(0, 0.682353, 0.968627, 1)
 font = ExtResource("4_ybf8c")
 font_size = 40
 font_color = Color(0.576471, 0.576471, 0.576471, 1)
-
-[sub_resource type="SystemFont" id="SystemFont_7j612"]
-font_names = PackedStringArray("Impact")
-
-[sub_resource type="LabelSettings" id="LabelSettings_n0ndj"]
-font = SubResource("SystemFont_7j612")
-font_size = 40
-font_color = Color(0.901961, 0, 0.235294, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_qk041"]
 font = ExtResource("4_ybf8c")
@@ -99,23 +107,51 @@ texture = ExtResource("1_x7cdy")
 
 [node name="throttleButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(2064, 113)
-scale = Vector2(2.89286, 2.89286)
+position = Vector2(2157, 70)
+scale = Vector2(2.89286, 3.07722)
 texture_normal = ExtResource("2_bb2s2")
 shape = SubResource("RectangleShape2D_gcot3")
 
 [node name="brakeButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(131, 541)
-scale = Vector2(2.78571, 2.78571)
+position = Vector2(64, 577)
+scale = Vector2(3.29167, 2.9729)
 texture_normal = ExtResource("3_4lma8")
 shape = SubResource("RectangleShape2D_0xof5")
 
+[node name="handbrakeButton" type="TouchScreenButton" parent="Control"]
+unique_name_in_owner = true
+position = Vector2(81, 166)
+scale = Vector2(2.65657, 2.57246)
+texture_normal = ExtResource("8_u6r1b")
+shape = SubResource("RectangleShape2D_5dpo1")
+
+[node name="gearupButton" type="TouchScreenButton" parent="Control"]
+unique_name_in_owner = true
+position = Vector2(1701, 940)
+scale = Vector2(1.82979, 1.82979)
+texture_normal = ExtResource("8_jn3x6")
+shape = SubResource("CircleShape2D_st36p")
+
+[node name="geardownButton" type="TouchScreenButton" parent="Control"]
+unique_name_in_owner = true
+position = Vector2(1396, 943)
+scale = Vector2(1.80142, 1.80142)
+texture_normal = ExtResource("9_r6ol0")
+shape = SubResource("CircleShape2D_y4y1m")
+
+[node name="hornButton" type="TouchScreenButton" parent="Control"]
+unique_name_in_owner = true
+position = Vector2(786, 947)
+scale = Vector2(1.76596, 1.76596)
+texture_normal = ExtResource("11_2c7lp")
+shape = SubResource("CircleShape2D_thvlm")
+
 [node name="resetButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(1245, 958)
-texture_normal = ExtResource("4_66qw7")
-shape = SubResource("CircleShape2D_1kpk3")
+position = Vector2(1110, 971)
+texture_normal = ExtResource("11_347s7")
+shape = SubResource("CircleShape2D_pqh22")
 
 [node name="speedLabel" type="Label" parent="Control"]
 unique_name_in_owner = true
@@ -139,6 +175,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="km_h" type="Label" parent="Control"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -206,20 +243,7 @@ texture_progress = ExtResource("5_6exsp")
 tint_under = Color(0.305882, 0.305882, 0.305882, 1)
 radial_initial_angle = 224.0
 radial_fill_degrees = 205.0
-radial_center_offset = Vector2(263.195, 267.63)
-
-[node name="absLabel" type="Label" parent="Control"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_left = 1126.0
-offset_top = 453.0
-offset_right = 1252.0
-offset_bottom = 547.0
-text = "ABS"
-label_settings = SubResource("LabelSettings_n0ndj")
-horizontal_alignment = 1
-vertical_alignment = 1
+radial_center_offset = Vector2(294.215, 267.63)
 
 [node name="connectionLabel" type="Label" parent="Control"]
 unique_name_in_owner = true
@@ -228,7 +252,7 @@ offset_left = 766.0
 offset_top = 148.0
 offset_right = 989.0
 offset_bottom = 240.0
-text = "disconnect"
+text = "disconnected"
 label_settings = SubResource("LabelSettings_qk041")
 horizontal_alignment = 1
 vertical_alignment = 1

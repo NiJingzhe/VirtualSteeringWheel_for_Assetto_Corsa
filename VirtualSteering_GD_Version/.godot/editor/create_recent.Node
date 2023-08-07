@@ -1,9 +1,9 @@
+TouchScreenButton
+Label
 TextEdit
 CheckButton
 Timer
-Label
 Node
-TouchScreenButton
 TextureProgressBar
 TextureRect
 RichTextLabel
