@@ -5,6 +5,7 @@ var throttle_value : float = 0.0
 var brake_value : float = 0.0
 var hand_brake_value : float = 0.0
 var raw_wheel_angle : float = 0.0
+var wheel_angle_bias : float = 0.0
 var wheel_angle : float = 0.0
 var wheel_angle_degree : float = 0.0
 var horn_on : bool = false
@@ -14,6 +15,7 @@ var gravity: Vector3 = Vector3.ZERO
 var raw_roll_acc : float = 0.0
 var roll_acc : float  = 0.0
 var gyroscope: Vector3 = Vector3.ZERO
+var half_round_counter : int = 0
 
 var speed : float = 0.0
 var gear_num : int = 0
@@ -54,21 +56,54 @@ func _ready():
 	receiver.init_receiver()
 	
 func _physics_process(delta):
-	
+	#读取重力数计算raw的重力夹角
 	gravity = Input.get_gravity()
-	raw_roll_acc = atan2(-gravity.x, -gravity.y) 
-	roll_acc = raw_roll_acc - roll_acc_bias
+	raw_roll_acc = atan2(-gravity.x, -gravity.y)
+	
+	# 考虑到任意位置重置角度所以要剪掉bias，并根据半圈计数器±对应的PI才是正确的
+	#这是为了能够记录任意旋转度数，实现对两侧共900度的真车方向盘角度模拟
+	roll_acc = raw_roll_acc - roll_acc_bias + half_round_counter * PI
+	if roll_acc >= 450 / 180.0 * PI:
+		roll_acc = 450 / 180.0 * PI
+	if roll_acc <= -450 / 180.0 * PI:
+		roll_acc = -450 / 180.0 * PI
+			
+	#读取陀螺仪角速度数据
 	gyroscope = Input.get_gyroscope()
+	#角速度积分得到raw的角度
 	raw_wheel_angle = raw_wheel_angle + gyroscope.z * delta
-	if nearly_is(roll_acc, 0, PI * 2 / 180) or nearly_is(roll_acc, PI / 2, PI / 180) or nearly_is(roll_acc, -PI / 2, PI / 180):
+	#限制于450°之间
+	if raw_wheel_angle >= 450 / 180.0 * PI:
+		raw_wheel_angle = 450 / 180.0 * PI
+	if raw_wheel_angle <= -450 / 180.0 * PI:
+		raw_wheel_angle = -450 / 180.0 * PI
+	#为了防止积分零飘，我们在几个关键位置附近将角度重置为重力角度数据
+	if nearly_is(roll_acc, half_round_counter * PI + PI * 3 / 4, PI * 6/ 180) or  \
+	   nearly_is(roll_acc, half_round_counter * PI - PI * 3 / 4, PI * 6/ 180) or  \
+	   nearly_is(roll_acc, half_round_counter * PI + PI * 2 / 4, PI * 6/ 180) or  \
+	   nearly_is(roll_acc, half_round_counter * PI - PI * 2 / 4, PI * 6/ 180) or  \
+	   nearly_is(roll_acc, half_round_counter * PI + PI * 1 / 4, PI * 6/ 180) or  \
+	   nearly_is(roll_acc, half_round_counter * PI - PI * 1 / 4, PI * 6/ 180) or  \
+	   nearly_is(roll_acc, half_round_counter * PI, PI * 10 / 180):
 		raw_wheel_angle = roll_acc
-	if raw_wheel_angle > PI:
-		roll_acc += 2 * PI
-	if raw_wheel_angle < -PI:
-		roll_acc -= 2 * PI
-	wheel_angle = lerp_angle(roll_acc, raw_wheel_angle, k) 
+		
+	#根据raw的wheel angle判断是不是超过了一圈，如果是，那就对半圈计数器±2		
+	if raw_wheel_angle > PI * (half_round_counter + 1):                 
+		half_round_counter += 2 if half_round_counter < 2 else 0
+	elif raw_wheel_angle < PI * (half_round_counter - 1):                
+		half_round_counter -= 2 if half_round_counter > -2 else 0
+		
+	if (%TextEdit as TextEdit).visible:
+		(%TextEdit as TextEdit).text =                                         \
+			'roll_acc : ' + '%.2f\n' % roll_acc +                              \
+			'raw_wheel_angle : ' + '%.2f\n' % raw_wheel_angle +                \
+			'half_round_counter : ' + '%d\n' % half_round_counter
+		
+	#之后我们在一般位置融合重力角度数据和角速度积分数据得到最后采用的wheel angle
+	wheel_angle = raw_wheel_angle 
 	wheel_angle_degree = wheel_angle * (180 / PI)
 	
+	#发送数据，因为该过程并不需要等待，所以可以考虑放在物理处理步骤中
 	var message = {
 		"sender" : "mobile", 
 		"angle" : wheel_angle_degree,
@@ -81,6 +116,7 @@ func _physics_process(delta):
 	}
 	sender.sendto("255.255.255.255", 20015, JSON.stringify(message))
 	
+	#UI更新放在物理步骤中是为了更流畅的更新UI
 	speed_text = "%.0f" % speed
 	gear_text = gear_num2str(gear_num)
 	
@@ -102,6 +138,7 @@ func _physics_process(delta):
 		gear_lab.label_settings.font_color = Color("b5e1ff")
 	
 func _process(_delta):
+	#UI事件处理就放在普通的处理函数中了
 	if throttle_btn.is_pressed():
 		throttle_value = 100
 	else:
@@ -124,13 +161,18 @@ func _process(_delta):
 	
 	if reset_btn.is_pressed():
 		roll_acc_bias = raw_roll_acc
+		raw_wheel_angle = 0
+		half_round_counter = 0
 	
+	#由于接收数据包可能会需要等待，故放在普通处理过程中
 	var raw_data = receiver.receive()
 	if raw_data != null:
-		var data_obj = JSON.parse_string((raw_data as PackedByteArray).get_string_from_utf8())
+		var data_obj =                                                         \
+		JSON.parse_string((raw_data as PackedByteArray).get_string_from_utf8())
+		
 		if data_obj["sender"] == 'pc':
-			if (%TextEdit as TextEdit).visible:
-				(%TextEdit as TextEdit).text = str(data_obj)
+			#if (%TextEdit as TextEdit).visible:
+			#	(%TextEdit as TextEdit).text = str(data_obj)
 			connection_lab.text = "connected"
 			timer.stop()
 			connection_lab.label_settings.font_color = Color("b5e1ff")
@@ -140,7 +182,7 @@ func _process(_delta):
 			max_rpm = data_obj["max_rpm"]
 			car_damage = data_obj["car_damage"]
 			#print(rpm)
-	else:
+	else: #由于数据包确实存在断续的情况，所以接收不到数据包一段时间（timer计时）才能够被判定为断开链接
 		if timer.is_stopped():
 			timer.start()
 		if timeout:
