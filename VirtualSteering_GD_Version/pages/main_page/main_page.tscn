@@ -257,18 +257,4 @@ label_settings = SubResource("LabelSettings_qk041")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextEdit" type="TextEdit" parent="Control"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_left = 18.0
-offset_top = 15.0
-offset_right = 695.0
-offset_bottom = 495.0
-theme_override_font_sizes/font_size = 25
-placeholder_text = "debug info"
-wrap_mode = 1
-draw_tabs = true
-draw_spaces = true
-
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

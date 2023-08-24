@@ -1,10 +1,12 @@
 bdbec74c6e5bd72edee867077d70896c
-::res://::1692874277
-export_presets.cfg::TextFile::-1::1692874257::0::1::::<><>::
+::res://::1692883087
+export_presets.cfg::TextFile::-1::1692883064::0::1::::<><>::
 icon.svg::CompressedTexture2D::1863657156086477710::1690876763::1690876768::1::::<><>::
+::res://android/::1692882361
+::res://android/plugins/::1692882361
 ::res://assets/::1690900721
-::res://assets/Font/::1692874263
-km_h_font.tres::SystemFont::2196081996392341280::1692874263::0::1::::<><>::
+::res://assets/Font/::1692883029
+km_h_font.tres::SystemFont::2196081996392341280::1692883029::0::1::::<><>::
 ::res://assets/icon/::1691244674
 屏幕截图 2023-07-31 215317.png::CompressedTexture2D::8540249900097435212::1691244670::1691244674::1::::<><>::
 ::res://assets/texture/::1691235076
@@ -20,9 +22,9 @@ rpm_progress.png::CompressedTexture2D::2363718713497435657::1690882109::16908834
 throttle.png::CompressedTexture2D::5397800568315838474::1690878765::1690878855::1::::<><>::
 wheelface.png::CompressedTexture2D::7588696878239808210::1690880592::1690880594::1::::<><>::
 ::res://pages/::1690880880
-::res://pages/main_page/::1692874262
-main_page.tscn::PackedScene::7521061950951394240::1692874262::0::1::::<><>::res://pages/main_page/script/main_page.gd<>uid://dgeay1tgxpy1w::::res://assets/texture/wheelface.png<>uid://ci5y8swq87dos::::res://assets/texture/throttle.png<>uid://cep62gu56gl64::::res://assets/texture/brake.png<>uid://6j2fc8auppwa::::res://assets/Font/km_h_font.tres<>uid://8xadp02pc5dl::::res://assets/texture/rpm_progress.png<>res://pages/main_page/script/UDPSender.gd<>uid://7inii6juyfek::::res://assets/texture/gear_up.png<>uid://b6ee6wquxgcus::::res://assets/texture/handbrake.png<>res://pages/main_page/script/UDPReceiver.gd<>uid://rry0ek71wy1r::::res://assets/texture/gear_down.png<>uid://ivair825o1d3::::res://assets/texture/horn.png<>uid://5ib1880wy24i::::res://assets/texture/reset.png
-::res://pages/main_page/script/::1691949165
-main_page.gd::GDScript::-1::1691949165::0::1::::SteeringWheel<>Node2D<>::
+::res://pages/main_page/::1692883083
+main_page.tscn::PackedScene::7521061950951394240::1692883083::0::1::::<><>::res://pages/main_page/script/main_page.gd<>uid://dgeay1tgxpy1w::::res://assets/texture/wheelface.png<>uid://ci5y8swq87dos::::res://assets/texture/throttle.png<>uid://cep62gu56gl64::::res://assets/texture/brake.png<>uid://6j2fc8auppwa::::res://assets/Font/km_h_font.tres<>uid://8xadp02pc5dl::::res://assets/texture/rpm_progress.png<>res://pages/main_page/script/UDPSender.gd<>uid://7inii6juyfek::::res://assets/texture/gear_up.png<>uid://b6ee6wquxgcus::::res://assets/texture/handbrake.png<>res://pages/main_page/script/UDPReceiver.gd<>uid://rry0ek71wy1r::::res://assets/texture/gear_down.png<>uid://ivair825o1d3::::res://assets/texture/horn.png<>uid://5ib1880wy24i::::res://assets/texture/reset.png
+::res://pages/main_page/script/::1692883029
+main_page.gd::GDScript::-1::1692883029::0::1::::SteeringWheel<>Node2D<>::
 UDPReceiver.gd::GDScript::-1::1690897888::0::1::::UDPReceiver<>Node<>::
 UDPSender.gd::GDScript::-1::1690897257::0::1::::UDPSender<>Node<>::

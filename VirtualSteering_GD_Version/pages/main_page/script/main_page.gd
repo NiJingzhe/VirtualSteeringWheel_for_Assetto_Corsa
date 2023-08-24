@@ -93,11 +93,11 @@ func _physics_process(delta):
 	elif raw_wheel_angle < PI * (half_round_counter - 1):                
 		half_round_counter -= 2 if half_round_counter > -2 else 0
 		
-	if (%TextEdit as TextEdit).visible:
-		(%TextEdit as TextEdit).text =                                         \
-			'roll_acc : ' + '%.2f\n' % roll_acc +                              \
-			'raw_wheel_angle : ' + '%.2f\n' % raw_wheel_angle +                \
-			'half_round_counter : ' + '%d\n' % half_round_counter
+#	if (%TextEdit as TextEdit).visible:
+#		(%TextEdit as TextEdit).text =                                         \
+#			'roll_acc : ' + '%.2f\n' % roll_acc +                              \
+#			'raw_wheel_angle : ' + '%.2f\n' % raw_wheel_angle +                \
+#			'half_round_counter : ' + '%d\n' % half_round_counter
 		
 	#之后我们在一般位置融合重力角度数据和角速度积分数据得到最后采用的wheel angle
 	wheel_angle = raw_wheel_angle 
