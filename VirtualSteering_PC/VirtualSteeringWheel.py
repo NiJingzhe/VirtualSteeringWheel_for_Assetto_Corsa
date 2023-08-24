@@ -2,7 +2,7 @@ from lib.VirtualJoy import VirtualJoy
 from lib.SpeedMonitor import SpeedMonitor
 
 CONFIG = {  
-    "MAX_ANGLE": 300,
+    "MAX_ANGLE": 200,
     "SEND_PORT": 4001,
     "RECV_PORT": 20015,
 }
