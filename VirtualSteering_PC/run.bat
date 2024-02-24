@@ -1,2 +1,2 @@
 @echo off
-.\vsteeringpc_env\Scripts\activate.bat
+python ./VirtualSteeringWheel.py
