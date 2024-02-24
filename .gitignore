@@ -1,4 +1,5 @@
 *.idsig
 VirtualSteering_GD_Version/export_presets.cfg
-VirtualSteering_MiniProgram_Version/project.config.json
-VirtualSteering_MiniProgram_Version/project.private.config.json
+VirtualSteering_Mobile/project.config.json
+VirtualSteering_Mobile/project.private.config.json
+VirtualSteering_PC/lib/__pycache__/
