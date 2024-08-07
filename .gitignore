@@ -3,3 +3,4 @@ VirtualSteering_GD_Version/export_presets.cfg
 VirtualSteering_Mobile/project.config.json
 VirtualSteering_Mobile/project.private.config.json
 VirtualSteering_PC/lib/__pycache__/
+*.keystore

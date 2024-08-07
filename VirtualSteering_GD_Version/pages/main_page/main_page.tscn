@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://5ib1880wy24i" path="res://assets/texture/reset.png" id="11_347s7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gcot3"]
-size = Vector2(166.765, 357.33)
+size = Vector2(144.74, 357.33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xof5"]
 size = Vector2(164.52, 200.955)
@@ -84,6 +84,10 @@ unique_name_in_owner = true
 wait_time = 3.0
 one_shot = true
 
+[node name="VibrationControlTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -107,49 +111,52 @@ texture = ExtResource("1_x7cdy")
 
 [node name="throttleButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(2157, 70)
-scale = Vector2(2.89286, 3.07722)
+position = Vector2(2187, 70)
+scale = Vector2(2.91667, 3.07722)
 texture_normal = ExtResource("2_bb2s2")
 shape = SubResource("RectangleShape2D_gcot3")
 
 [node name="brakeButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(64, 577)
-scale = Vector2(3.29167, 2.9729)
+position = Vector2(64, 382)
+scale = Vector2(3.29167, 3.93349)
 texture_normal = ExtResource("3_4lma8")
 shape = SubResource("RectangleShape2D_0xof5")
 
 [node name="handbrakeButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(81, 166)
-scale = Vector2(2.65657, 2.57246)
+position = Vector2(86, 68)
+scale = Vector2(2.65657, 2.02898)
 texture_normal = ExtResource("8_u6r1b")
 shape = SubResource("RectangleShape2D_5dpo1")
 
 [node name="gearupButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(1701, 940)
-scale = Vector2(1.82979, 1.82979)
+position = Vector2(1983, 322)
+scale = Vector2(1.48936, 1.48936)
 texture_normal = ExtResource("8_jn3x6")
 shape = SubResource("CircleShape2D_st36p")
+action = "GearUp"
 
 [node name="geardownButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(1396, 943)
-scale = Vector2(1.80142, 1.80142)
+position = Vector2(1987, 550)
+scale = Vector2(1.46099, 1.43972)
 texture_normal = ExtResource("9_r6ol0")
 shape = SubResource("CircleShape2D_y4y1m")
+action = "GearDown"
 
 [node name="hornButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(786, 947)
-scale = Vector2(1.76596, 1.76596)
+position = Vector2(749, 964)
+scale = Vector2(1.09929, 1.09929)
 texture_normal = ExtResource("11_2c7lp")
 shape = SubResource("CircleShape2D_thvlm")
 
 [node name="resetButton" type="TouchScreenButton" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(1110, 971)
+position = Vector2(956, 971)
+scale = Vector2(0.702326, 0.702326)
 texture_normal = ExtResource("11_347s7")
 shape = SubResource("CircleShape2D_pqh22")
 
@@ -233,17 +240,17 @@ vertical_alignment = 1
 [node name="rpmProgressBar" type="TextureProgressBar" parent="Control"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 807.0
-offset_top = 212.0
-offset_right = 1573.0
-offset_bottom = 853.0
-fill_mode = 4
+offset_left = 821.0
+offset_top = 247.0
+offset_right = 1517.0
+offset_bottom = 597.0
+scale = Vector2(1.195, 1.445)
 texture_under = ExtResource("5_6exsp")
 texture_progress = ExtResource("5_6exsp")
 tint_under = Color(0.305882, 0.305882, 0.305882, 1)
 radial_initial_angle = 224.0
-radial_fill_degrees = 205.0
-radial_center_offset = Vector2(294.215, 267.63)
+radial_fill_degrees = 198.7
+radial_center_offset = Vector2(368.725, 307.435)
 
 [node name="connectionLabel" type="Label" parent="Control"]
 unique_name_in_owner = true
@@ -258,3 +265,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="VibrationControlTimer" to="." method="_on_vibration_control_timer_timeout"]

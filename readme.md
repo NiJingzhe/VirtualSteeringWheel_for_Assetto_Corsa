@@ -19,19 +19,14 @@
     from lib.SpeedMonitor import SpeedMonitor
 
     CONFIG = {  
-        "MAX_ANGLE": 300,
+        "MAX_ANGLE": 130,
         "SEND_PORT": 4001,
         "RECV_PORT": 20015,
     }
 
-    if __name__ == "__main__":
-        virtualJoy = VirtualJoy(CONFIG)
-        speedMonitor = SpeedMonitor(CONFIG)
-        while True:
-            virtualJoy.update()
-            speedMonitor.setSteeringIP(virtualJoy.getSteeringIP())
-            speedMonitor.update()
-    
+
+    ...Other code...
+
     ```
     其中`CONFIG`中的配置项含义如下：
     
@@ -39,4 +34,4 @@
     - 发送端口
     - 接收端口
    
-    根据自己的需要可以更改第一个配置，最大支持单侧450度（900度一圈半方向盘）
+    根据自己的需要可以更改第一个配置，最大支持单侧170度

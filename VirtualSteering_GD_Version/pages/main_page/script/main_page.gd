@@ -26,7 +26,8 @@ var timeout : bool = false
 
 var car_damage : float = 0.0
 var last_car_damage : float = 0.0
-var slip_vibe : float = 0.0
+var slip_value : float = 0.0
+var can_vib : bool = false
 
 var speed_text : String = ''
 var gear_text : String = ''
@@ -61,22 +62,22 @@ func _physics_process(delta):
 	raw_roll_acc = atan2(-gravity.x, -gravity.y)
 	
 	# 考虑到任意位置重置角度所以要剪掉bias，并根据半圈计数器±对应的PI才是正确的
-	#这是为了能够记录任意旋转度数，实现对两侧共900度的真车方向盘角度模拟
+	# 新版本中将会把角度限制在左右170度范围内
 	roll_acc = raw_roll_acc - roll_acc_bias + half_round_counter * PI
-	if roll_acc >= 450 / 180.0 * PI:
-		roll_acc = 450 / 180.0 * PI
-	if roll_acc <= -450 / 180.0 * PI:
-		roll_acc = -450 / 180.0 * PI
+	if roll_acc >= 170 / 180.0 * PI:
+		roll_acc = 170 / 180.0 * PI
+	if roll_acc <= -170 / 180.0 * PI:
+		roll_acc = -170 / 180.0 * PI
 			
 	#读取陀螺仪角速度数据
 	gyroscope = Input.get_gyroscope()
 	#角速度积分得到raw的角度
 	raw_wheel_angle = raw_wheel_angle + gyroscope.z * delta
 	#限制于450°之间
-	if raw_wheel_angle >= 450 / 180.0 * PI:
-		raw_wheel_angle = 450 / 180.0 * PI
-	if raw_wheel_angle <= -450 / 180.0 * PI:
-		raw_wheel_angle = -450 / 180.0 * PI
+	if raw_wheel_angle >= 170/ 180.0 * PI:
+		raw_wheel_angle = 170 / 180.0 * PI
+	if raw_wheel_angle <= -170 / 180.0 * PI:
+		raw_wheel_angle = -170 / 180.0 * PI
 	#为了防止积分零飘，我们在几个关键位置附近将角度重置为重力角度数据
 	if nearly_is(roll_acc, half_round_counter * PI + PI * 3 / 4, PI * 6/ 180) or  \
 	   nearly_is(roll_acc, half_round_counter * PI - PI * 3 / 4, PI * 6/ 180) or  \
@@ -87,12 +88,13 @@ func _physics_process(delta):
 	   nearly_is(roll_acc, half_round_counter * PI, PI * 10 / 180):
 		raw_wheel_angle = roll_acc
 		
-	#根据raw的wheel angle判断是不是超过了一圈，如果是，那就对半圈计数器±2		
+	#根据raw的wheel angle判断是不是超过了一圈，如果是，那就对半圈计数器±2	
+	#实际上这个逻辑已经弃用，因为将角度限制在左右170度范围内了	
 	if raw_wheel_angle > PI * (half_round_counter + 1):                 
 		half_round_counter += 2 if half_round_counter < 2 else 0
 	elif raw_wheel_angle < PI * (half_round_counter - 1):                
 		half_round_counter -= 2 if half_round_counter > -2 else 0
-		
+		#
 #	if (%TextEdit as TextEdit).visible:
 #		(%TextEdit as TextEdit).text =                                         \
 #			'roll_acc : ' + '%.2f\n' % roll_acc +                              \
@@ -124,9 +126,10 @@ func _physics_process(delta):
 	speed_lab.text = speed_text
 	gear_lab.text = gear_text
 	rpm_progress.value = (rpm / max_rpm) * 100
-	
+
+	# 车损震动
 	if car_damage > last_car_damage:
-		Input.vibrate_handheld(300)
+		Input.vibrate_handheld(100)
 		
 	last_car_damage = car_damage
 	
@@ -164,6 +167,19 @@ func _process(_delta):
 		raw_wheel_angle = 0
 		half_round_counter = 0
 	
+	if slip_value > 4 and slip_value < 10 and can_vib:
+		Input.vibrate_handheld(4)
+		Input.vibrate_handheld(0)
+		Input.vibrate_handheld(2)
+		can_vib = false
+	elif (slip_value >= 10 or gear_down_btn.is_pressed() or gear_up_btn.is_pressed())and can_vib:
+		Input.vibrate_handheld(8)
+		Input.vibrate_handheld(0)
+		Input.vibrate_handheld(4)
+		can_vib = false
+	else:
+		pass
+	
 	#由于接收数据包可能会需要等待，故放在普通处理过程中
 	var raw_data = receiver.receive()
 	if raw_data != null:
@@ -181,6 +197,7 @@ func _process(_delta):
 			rpm = data_obj["rpm"]
 			max_rpm = data_obj["max_rpm"]
 			car_damage = data_obj["car_damage"]
+			slip_value = data_obj["slip_value"]
 			#print(rpm)
 	else: #由于数据包确实存在断续的情况，所以接收不到数据包一段时间（timer计时）才能够被判定为断开链接
 		if timer.is_stopped():
@@ -194,7 +211,7 @@ func _process(_delta):
 			timer.stop()
 			timeout = false
 
-		
+#============================ TOOLS FUNCTIONS =============================
 func gear_num2str(gear_num_):
 	if gear_num_ == 0:
 		return 'R'
@@ -208,3 +225,7 @@ func nearly_is(src, tgt, eps):
 
 func _on_timer_timeout():
 	timeout = true
+
+
+func _on_vibration_control_timer_timeout():
+	can_vib = true
